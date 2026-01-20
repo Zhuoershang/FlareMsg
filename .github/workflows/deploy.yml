@@ -28,6 +28,9 @@ jobs:
       - name: TypeScript type checking
         run: npm run type-check
 
+      - name: Build HTML templates
+        run: npm run build:templates
+
       - name: Configure wrangler.toml
         run: |
           # 从 GitHub Secrets 替换生产环境 KV Namespace ID

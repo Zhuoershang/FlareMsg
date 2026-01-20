@@ -50,6 +50,9 @@ out/
 # Cloudflare Workers 相关
 wrangler.toml.backup
 
+# 生成的 HTML 模块（从 templates/ 自动生成）
+html/
+
 # 临时文件
 *.tmp
 *.temp
