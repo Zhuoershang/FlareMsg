@@ -54,3 +54,7 @@ wrangler.toml.backup
 *.tmp
 *.temp
 .cache/
+
+# 构建备份文件
+*.bak
+*.backup*

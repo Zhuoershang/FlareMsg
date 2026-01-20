@@ -4,8 +4,9 @@
   "description": "Cloudflare Workers 微信消息推送服务",
   "main": "index.ts",
   "scripts": {
+    "build:templates": "node build-templates.js",
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
+    "deploy": "npm run build:templates && wrangler deploy",
     "type-check": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
