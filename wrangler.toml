@@ -7,8 +7,6 @@ compatibility_date = "2024-01-01"
 # 本地开发使用 preview_id
 [[kv_namespaces]]
 binding = "WECHAT_KV"
-id = "YOUR_KV_NAMESPACE_ID"  # GitHub Actions 将自动替换此值
-preview_id = "70ed461e66934ac7bef1e31b897af4bd"  # 本地开发环境
 
 # 环境变量配置
 [vars]

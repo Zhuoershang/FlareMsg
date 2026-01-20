@@ -28,25 +28,6 @@ jobs:
       - name: TypeScript type checking
         run: npm run type-check
 
-      - name: Configure wrangler.toml
-        run: |
-          # 从 GitHub Secrets 替换生产环境 KV Namespace ID
-          if [ -z "${{ secrets.KV_NAMESPACE_ID }}" ]; then
-            echo "❌ Error: KV_NAMESPACE_ID secret is not set!"
-            echo "Please add KV_NAMESPACE_ID to your GitHub Secrets"
-            exit 1
-          fi
-
-          sed -i "s|YOUR_KV_NAMESPACE_ID|${{ secrets.KV_NAMESPACE_ID }}|g" wrangler.toml
-
-          # 验证替换是否成功
-          if grep -q "YOUR_KV_NAMESPACE_ID" wrangler.toml; then
-            echo "❌ Error: KV Namespace ID replacement failed!"
-            exit 1
-          fi
-
-          echo "✅ Configured KV Namespace ID: ${{ secrets.KV_NAMESPACE_ID }}"
-
       - name: Deploy to Cloudflare Workers
         run: npx wrangler deploy
         env:
