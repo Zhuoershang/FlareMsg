@@ -43,15 +43,12 @@ Thumbs.db
 # TypeScript
 *.tsbuildinfo
 
-# Build outputs
+# Build outputs (保留 html/ 目录用于 Wrangler 打包)
 build/
 out/
 
 # Cloudflare Workers 相关
 wrangler.toml.backup
-
-# 生成的 HTML 模块（从 templates/ 自动生成）
-html/
 
 # 临时文件
 *.tmp
