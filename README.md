@@ -16,7 +16,7 @@
 ### 1. 前置准备
 
 - 注册 [Cloudflare 账号](https://dash.cloudflare.com/sign-up)
-- 安装 [Node.js](https://nodejs.org/) (推荐 v18+)
+- 安装 [Node.js](https://nodejs.org/) (推荐 v20+, Wrangler v4 要求)
 - 获取微信测试公众号：
   - 访问 [微信公众平台测试号](https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login)
   - 记录 `appID` 和 `appSecret`
