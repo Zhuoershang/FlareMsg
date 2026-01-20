@@ -1642,7 +1642,7 @@ const ADMIN_HTML = `<!DOCTYPE html>
                     const data = await response.json();
                     console.log('[DEBUG] Response data:', data);
                     displayTokens(data.tokens);
-                    stats.textContent = `共找到 ${data.tokens.length} 个 Token`;
+                    stats.textContent = '共找到 ' + data.tokens.length + ' 个 Token';
                 } else {
                     const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
                     console.error('[ERROR] Failed to load tokens:', errorData);
@@ -1664,18 +1664,7 @@ const ADMIN_HTML = `<!DOCTYPE html>
                 return;
             }
 
-            container.innerHTML = tokens.map(token => \`
-                <div class="token-item">
-                    <div class="token-info">
-                        <div class="token-key">\${token.key}</div>
-                        <div class="token-value">\${token.value}</div>
-                    </div>
-                    <div class="token-actions">
-                        <button class="danger" onclick="deleteToken('\${token.key}')">删除</button>
-                        <button onclick="copyToClipboard('\${token.key}')">复制 Token</button>
-                    </div>
-                </div>
-            \`).join('');
+            container.innerHTML = tokens.map(token => '<div class="token-item"><div class="token-info"><div class="token-key">' + token.key + '</div><div class="token-value">' + token.value + '</div></div><div class="token-actions"><button class="danger" onclick="deleteToken(\\'' + token.key + '\\')">删除</button><button onclick="copyToClipboard(\\'' + token.key + '\\')">复制 Token</button></div></div>').join('');
         }
 
         async function addToken() {
@@ -2095,7 +2084,7 @@ async function handleAdminAPI(request: Request, env: Env, url: URL): Promise<Res
       try {
         // 使用循环处理分页，确保获取所有 keys
         do {
-          const listResult = await kv.list({ cursor });
+          const listResult = await kv.list({ cursor }) as { keys: Array<{ name: string }>, list_complete: boolean, cursor?: string };
           console.log(`[DEBUG] KV list result: keys=${listResult.keys.length}, list_complete=${listResult.list_complete}, cursor=${listResult.cursor ? 'exists' : 'none'}`);
 
           for (const key of listResult.keys) {
