@@ -25,11 +25,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: TypeScript type checking
-        run: npm run type-check
-
       - name: Build HTML templates
         run: npm run build:templates
+
+      - name: TypeScript type checking
+        run: npm run type-check
 
       - name: Configure wrangler.toml
         run: |
