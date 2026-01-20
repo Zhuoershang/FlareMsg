@@ -1705,6 +1705,7 @@ interface Env {
   COLOR_FROM?: string;
   COLOR_DESC?: string;
   COLOR_REMARK?: string;
+  RATE_LIMIT_RPM?: number;  // 全局 RPM 限制（每分钟请求数），0 或未设置表示不限制
 }
 
 // 请求体类型定义
@@ -1771,6 +1772,22 @@ export default {
         headers: {
           'Content-Type': 'text/html; charset=utf-8',
           'Cache-Control': 'no-cache, no-store, must-revalidate'
+        }
+      });
+    }
+
+    // 全局 RPM 限制检查（对所有 API 接口生效）
+    const rateLimitPassed = await checkRateLimit(env);
+    if (!rateLimitPassed) {
+      return new Response(JSON.stringify({
+        errcode: -2,
+        errmsg: 'Rate limit exceeded. Please try again later.',
+        rpm_limit: env.RATE_LIMIT_RPM
+      }), {
+        status: 429,
+        headers: {
+          'Content-Type': 'application/json',
+          'Retry-After': '60'
         }
       });
     }
@@ -1930,6 +1947,48 @@ function getKV(env: Env): KVNamespace {
   }
 
   return kv;
+}
+
+/**
+ * 检查全局 RPM 限制
+ * @param env - 环境变量
+ * @returns 是否通过限制检查（true 表示通过，false 表示超过限制）
+ */
+async function checkRateLimit(env: Env): Promise<boolean> {
+  const rpmLimit = env.RATE_LIMIT_RPM || 0;
+
+  // 如果设置为 0 或未设置，表示不限制
+  if (rpmLimit <= 0) {
+    return true;
+  }
+
+  const kv = getKV(env);
+
+  // 计算当前分钟的时间戳（从 Unix epoch 开始的分钟数）
+  const currentMinute = Math.floor(Date.now() / 60000);
+  const rateLimitKey = `rate_limit:${currentMinute}`;
+
+  try {
+    // 获取当前分钟的计数
+    const currentCount = await kv.get(rateLimitKey);
+    const count = currentCount ? parseInt(currentCount, 10) : 0;
+
+    // 检查是否超过限制
+    if (count >= rpmLimit) {
+      return false;
+    }
+
+    // 增加计数，并设置 TTL 为 60 秒（自动过期）
+    await kv.put(rateLimitKey, String(count + 1), {
+      expirationTtl: 60
+    });
+
+    return true;
+  } catch (error) {
+    // KV 访问失败时，为了不影响主流程，选择放行请求
+    console.error('[ERROR] Rate limit check failed:', error instanceof Error ? error.message : 'Unknown error');
+    return true;
+  }
 }
 
 /**

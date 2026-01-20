@@ -21,6 +21,11 @@ COLOR_FROM = "#173177"
 COLOR_DESC = "#000000"
 COLOR_REMARK = "#888888"
 
+# RPM 限制配置（每分钟请求数）
+# 设置为 0 表示不限制（默认值）
+# 启用建议值：100-300 次/分钟，避免滥用
+# RATE_LIMIT_RPM = 0
+
 # 注意：以下敏感信息必须通过 wrangler secret put 命令设置，不要直接写在此文件中
 # - WECHAT_APP_ID: 微信公众号 AppID
 # - WECHAT_APP_SECRET: 微信公众号 AppSecret
