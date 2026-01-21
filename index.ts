@@ -1794,6 +1794,7 @@ interface Env {
   COLOR_DESC?: string;
   COLOR_REMARK?: string;
   RATE_LIMIT_RPM?: number;  // 全局 RPM 限制（每分钟请求数），0 或未设置表示不限制
+  ALLOWED_ORIGIN?: string;  // CORS 允许的来源（默认: "*"）
 }
 
 // 请求体类型定义
