@@ -3,9 +3,10 @@ main = "index.ts"
 compatibility_date = "2024-01-01"
 
 # KV Namespace 配置
-# 生产环境 ID 将由 GitHub Actions 自动替换
+# 如果需要自行部署 KV，请取消注释并填写你的 KV 命名空间 ID
 [[kv_namespaces]]
 binding = "WECHAT_KV"
+#id = "YOUR_KV_NAMESPACE_ID" 
 
 # 环境变量配置
 [vars]
