@@ -22,10 +22,10 @@ COLOR_DESC = "#000000"
 COLOR_REMARK = "#888888"
 
 # 微信模板 ID 配置
-# 请将下面的注释解除，并替换为你的微信模板 ID
+# 生产环境 ID 将由 GitHub Actions 自动替换
 # 获取方法：访问 https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login
 # 点击"新增测试模版"，创建模板后记录模板 ID
-# WECHAT_TEMPLATE_ID = "YOUR_TEMPLATE_ID"
+WECHAT_TEMPLATE_ID = "YOUR_TEMPLATE_ID"
 
 # RPM 限制配置（每分钟请求数）
 # 设置为 0 表示不限制（默认值）

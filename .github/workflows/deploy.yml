@@ -28,6 +28,13 @@ jobs:
       - name: TypeScript type checking
         run: npm run type-check
 
+      - name: Configure wrangler.toml
+        run: |
+          # 从 GitHub Secrets 替换生产环境 KV Namespace ID
+          sed -i "s|YOUR_KV_NAMESPACE_ID|${{ secrets.KV_NAMESPACE_ID }}|g" wrangler.toml
+          # 从 GitHub Secrets 替换生产环境微信模板 ID
+          sed -i "s|YOUR_TEMPLATE_ID|${{ secrets.WECHAT_TEMPLATE_ID }}|g" wrangler.toml
+
       - name: Deploy to Cloudflare Workers
         run: npx wrangler deploy
         env:
