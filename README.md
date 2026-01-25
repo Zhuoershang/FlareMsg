@@ -23,7 +23,16 @@
 - 获取微信测试公众号：
   - 访问 [微信公众平台测试号](https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login)
   - 记录 `appID` 和 `appSecret`
-  - 创建模版消息，记录 `template_id`
+  - **创建模版消息**：
+    1. 点击"新增测试模版"
+    2. 模版标题：随意填写（如"系统通知"）
+    3. 模版内容：**必须**使用以下格式
+       ```
+       {{FROM.DATA}}
+       {{DESC.DATA}}
+       {{REMARK.DATA}}
+       ```
+    4. 点击"确定"后，记录生成的 `template_id`（形如 `xBxxxxxxxxxxxxxx`）
   - 关注测试号，获取个人 `openid`
 
 ### 2. 安装依赖
@@ -44,10 +53,21 @@ npx wrangler kv namespace create WECHAT_KV
 
 #### 3.2 配置环境变量
 
-编辑 `wrangler.toml`，填入：
+编辑 `wrangler.toml`，配置微信模版 ID：
 
-- 解除 `WECHAT_TEMPLATE_ID` 注释并填入你的微信模版 ID
-- 其他可选配置（默认消息内容、颜色等）
+**方式一：直接修改（推荐用于本地部署）**
+
+将 `WECHAT_TEMPLATE_ID` 的值 `YOUR_TEMPLATE_ID` 替换为你的实际模版 ID：
+
+```toml
+WECHAT_TEMPLATE_ID = "xBxxxxxxxxxxxxxx"  # 替换为你的模版 ID
+```
+
+**方式二：使用 GitHub Actions（推荐用于自动部署）**
+
+保持占位符不变，在 GitHub Secrets 中添加 `WECHAT_TEMPLATE_ID`，部署时会自动替换。
+
+其他可选配置（默认消息内容、颜色等）可根据需要调整。
 
 #### 3.3 设置敏感信息（Secrets）
 
@@ -79,6 +99,34 @@ npm run deploy
 部署成功后，你会得到一个 `*.workers.dev` 的 URL。
 
 ## API 使用
+
+### 网页测试界面（推荐用于快速测试）
+
+访问 `https://your-worker.workers.dev/` 即可打开网页测试界面。
+
+**功能特性**：
+- 📝 可视化表单，无需编写代码
+- 🔒 安全的密码输入框保护 Token
+- ⚡ 实时反馈发送结果
+- 🎨 精美的暗黑/浅色主题
+
+**使用步骤**：
+1. 打开首页，填写以下字段：
+   - **鉴权密钥**：输入 `CLIENT_AUTH_TOKEN` 的值（必填）
+   - **微信 OpenID**：输入接收者的 OpenID（必填）
+   - **消息来源**：例如"系统监控"（可选）
+   - **消息内容**：例如"服务器 CPU 使用率过高"（必填）
+   - **备注信息**：例如"请及时查看"（可选）
+   - **跳转链接**：点击消息后跳转的 URL（可选）
+2. 点击"发送消息"按钮
+3. 查看发送结果，成功时会显示消息 ID
+
+**重要提示**：
+- `消息内容`（desc）是必填字段，这是显示在微信消息中的主要内容
+- 如果收到消息但看不到内容，请检查：
+  - 模版内容是否为 `{{FROM.DATA}}`、`{{DESC.DATA}}`、`{{REMARK.DATA}}`
+  - 发送时是否填写了"消息内容"字段
+  - `wrangler.toml` 中是否配置了 `WECHAT_TEMPLATE_ID`
 
 ### 鉴权机制
 

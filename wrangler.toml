@@ -22,9 +22,13 @@ COLOR_DESC = "#000000"
 COLOR_REMARK = "#888888"
 
 # 微信模板 ID 配置
-# 生产环境 ID 将由 GitHub Actions 自动替换
 # 获取方法：访问 https://mp.weixin.qq.com/debug/cgi-bin/sandbox?t=sandbox/login
-# 点击"新增测试模版"，创建模板后记录模板 ID
+# 点击"新增测试模版"，创建模板后记录模板 ID（形如 xBxxxxxxxxxxxxxx）
+#
+# 部署方式：
+# 1. 本地部署：直接将下方的 YOUR_TEMPLATE_ID 替换为你的实际模版 ID
+# 2. GitHub Actions 部署：保持占位符不变，在 GitHub Secrets 中配置 WECHAT_TEMPLATE_ID
+#    部署时会自动替换占位符为实际值
 WECHAT_TEMPLATE_ID = "YOUR_TEMPLATE_ID"
 
 # RPM 限制配置（每分钟请求数）
