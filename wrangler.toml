@@ -6,7 +6,7 @@ compatibility_date = "2024-01-01"
 # 如果需要自行部署 KV，请取消注释并填写你的 KV 命名空间 ID
 [[kv_namespaces]]
 binding = "WECHAT_KV"
-#id = "YOUR_KV_NAMESPACE_ID" 
+id = "e1c36a55d67f4e5697877658fa514b98" 
 
 # 环境变量配置
 [vars]
@@ -30,7 +30,7 @@ COLOR_REMARK = "#888888"
 # 1. 本地部署：直接将下方的 YOUR_TEMPLATE_ID 替换为你的实际模版 ID
 # 2. GitHub Actions 部署：保持占位符不变，在 GitHub Secrets 中配置 WECHAT_TEMPLATE_ID
 #    部署时会自动替换占位符为实际值
-WECHAT_TEMPLATE_ID = "YOUR_TEMPLATE_ID"
+WECHAT_TEMPLATE_ID = "LDx8dVfHhybTGtHY5FGNzUukMM4z_uzwrpwntgaro0U"
 
 # RPM 限制配置（每分钟请求数）
 # 设置为 0 表示不限制（默认值）
