@@ -1949,7 +1949,7 @@ function validateInput(params: RequestBody): {
   valid: boolean;
   error?: string;
 } {
-  const { openid, from, desc, remark, url } = params;
+  const { openid, temp, from, desc, remark, url } = params;
 
   // 验证 openid
   if (openid && openid.length > SECURITY_CONSTANTS.MAX_OPENID_LENGTH) {
