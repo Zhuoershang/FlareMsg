@@ -2095,7 +2095,7 @@ export default {
             env,
           );
         }
-
+        console.error("[2.1] Message send failed:");
         // 鉴权：检查 token（支持参数、body 或 header）
         const clientToken =
           params.token ||
