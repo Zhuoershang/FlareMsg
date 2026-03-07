@@ -2293,12 +2293,16 @@ async function sendWechatMessage(
   const desc = payload.desc || env.DEFAULT_DESC || "无内容";
   const remark = payload.remark || env.DEFAULT_REMARK || "";
   const url = payload.url || env.DEFAULT_URL || "";
+  // 构造模板消息时，可通过请求参数选择消息模板
+  const temp = payload.temp || env.WECHAT_TEMPLATE_ID || "";
 
   // 构造微信模版消息 payload
   const wechatPayload: WechatTemplatePayload = {
     touser: payload.openid,
-    template_id: env.WECHAT_TEMPLATE_ID,
-    url: url,
+    // template_id: env.WECHAT_TEMPLATE_ID,
+    template_id: temp, 
+    //url: url,
+    ...(url ? { url } : {}),// 将url设置为可选字段
     data: {
       FROM: {
         value: from,
