@@ -1801,6 +1801,7 @@ interface Env {
 interface RequestBody {
   token?: string;
   openid: string;
+  temp?: string;  
   from?: string;
   desc?: string;
   remark?: string;
@@ -1810,6 +1811,7 @@ interface RequestBody {
 // 消息 Payload 类型定义
 interface MessagePayload {
   openid: string;
+  temp?: string; 
   from?: string;
   desc?: string;
   remark?: string;
@@ -1953,6 +1955,10 @@ function validateInput(params: RequestBody): {
   if (openid && openid.length > SECURITY_CONSTANTS.MAX_OPENID_LENGTH) {
     return { valid: false, error: "Invalid openid length" };
   }
+  // 验证 temp（如果提供了）
+  if (temp && temp.length > 100) {  // 模板 ID 一般不会超过 100
+    return { valid: false, error: "Template id too long" };
+  }
 
   // 验证长度
   if (from && from.length > SECURITY_CONSTANTS.MAX_INPUT_LENGTH) {
@@ -2069,7 +2075,7 @@ export default {
           params = {
             token: url.searchParams.get("token") || undefined,
             openid: url.searchParams.get("openid") || "",
-            temp: url.searchParams.get("temp") || "",
+            temp: url.searchParams.get("temp") || undefined,
             from: url.searchParams.get("from") || undefined,
             desc: url.searchParams.get("desc") || undefined,
             remark: url.searchParams.get("remark") || undefined,
