@@ -2069,7 +2069,7 @@ export default {
 
       try {
         let params: RequestBody;
-
+        console.error("[1] Message send failed:");
         // GET 请求：从 URL query 参数获取
         if (request.method === "GET") {
           params = {
@@ -2085,7 +2085,7 @@ export default {
           // POST 请求：从请求体获取
           params = (await request.json()) as RequestBody;
         }
-
+        console.error("[2] Message send failed:");
         // 输入验证
         const validation = validateInput(params);
         if (!validation.valid) {
@@ -2106,7 +2106,7 @@ export default {
         }
 
         let actualOpenid = params.openid;
-
+        
         // 如果 token 以 sk_ 开头，从 KV 获取对应的 openid
         if (clientToken.startsWith("sk_")) {
           try {
@@ -2133,7 +2133,7 @@ export default {
         if (!actualOpenid) {
           return createErrorResponse("Bad Request", 400, env);
         }
-
+        console.error("[3] Message send failed:");
         // 调用发送消息函数
         const result = await sendWechatMessage(env, {
           openid: actualOpenid,
@@ -2143,7 +2143,7 @@ export default {
           remark: params.remark,
           url: params.url,
         });
-
+        console.error("[4] Message send failed:");
         return new Response(JSON.stringify(result), {
           status: result.errcode === 0 ? 200 : 500,
           headers: createSecureHeaders(env, "application/json"),
