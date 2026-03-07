@@ -2069,6 +2069,7 @@ export default {
           params = {
             token: url.searchParams.get("token") || undefined,
             openid: url.searchParams.get("openid") || "",
+            temp: url.searchParams.get("temp") || "",
             from: url.searchParams.get("from") || undefined,
             desc: url.searchParams.get("desc") || undefined,
             remark: url.searchParams.get("remark") || undefined,
@@ -2130,6 +2131,7 @@ export default {
         // 调用发送消息函数
         const result = await sendWechatMessage(env, {
           openid: actualOpenid,
+          temp: params.temp, 
           from: params.from,
           desc: params.desc,
           remark: params.remark,
