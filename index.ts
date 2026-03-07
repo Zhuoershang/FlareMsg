@@ -2075,7 +2075,7 @@ export default {
           params = {
             token: url.searchParams.get("token") || undefined,
             openid: url.searchParams.get("openid") || "",
-            temp: url.searchParams.get("temp") || undefined,
+            temp: url.searchParams.get("temp") || env.WECHAT_TEMPLATE_ID,
             from: url.searchParams.get("from") || undefined,
             desc: url.searchParams.get("desc") || undefined,
             remark: url.searchParams.get("remark") || undefined,
