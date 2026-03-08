@@ -35,7 +35,7 @@ COLOR_REMARK = "#888888"
 # 1. 本地部署：直接将下方的 YOUR_TEMPLATE_ID 替换为你的实际模版 ID
 # 2. GitHub Actions 部署：保持占位符不变，在 GitHub Secrets 中配置 WECHAT_TEMPLATE_ID
 #    部署时会自动替换占位符为实际值
-WECHAT_TEMPLATE_ID = "LDx8dVfHhybTGtHY5FGNzUukMM4z_uzwrpwntgaro0U"
+WECHAT_TEMPLATE_ID = "-v7XHndVqPmKQKvTIYszNtPoRU571KGqVRf5MmB-FoU"
 
 # RPM 限制配置（每分钟请求数）
 # 设置为 0 表示不限制（默认值）
