@@ -187,6 +187,7 @@ npm run deploy
 - `消息内容`（desc）是必填字段，这是显示在微信消息中的主要内容
 - 如果收到消息但看不到内容，请检查：
   - 模版内容是否为 `{{FROM.DATA}}`、`{{DESC.DATA}}`、`{{REMARK.DATA}}`
+  - 消息模板可选：首页发送使用默认消息模板，通过api请求可以在参数中自定义模板。
   - 发送时是否填写了"消息内容"字段
   - `wrangler.toml` 中是否配置了 `WECHAT_TEMPLATE_ID`
 
@@ -216,6 +217,7 @@ FlareMsg 支持两种 Token 鉴权方式：
 ```
 token=your_auth_token
 &openid=user_openid (可选，使用用户 Token 时不需要)
+&temp=消息模板（本分支增加）
 &from=消息来源
 &desc=消息内容
 &remark=备注
@@ -248,6 +250,7 @@ Content-Type: application/json
 {
   "token": "your_auth_token",
   "openid": "user_openid",
+  "temp": "消息模板字符串",
   "from": "服务器 A",
   "desc": "磁盘使用率达到 90%",
   "remark": "请及时处理",
@@ -263,6 +266,7 @@ Content-Type: application/json
 - `openid` (条件必填): 微信用户的 OpenID
   - 使用全局 Token 时必填
   - 使用用户 Token（`sk_` 开头）时不需要
+- `temp` (可选)：消息模板/不指定则使用默认模板，在环境变量指定默认模板ID
 - `from` (可选): 消息来源/标题
 - `desc` (可选): 消息主要内容
 - `remark` (可选): 备注信息
@@ -300,6 +304,7 @@ curl -X POST https://your-worker.workers.dev/send \
   -d '{
     "token": "your_client_auth_token",
     "openid": "oABCD1234567890",
+    "temp": "dfgsdhsgfjyjjgkgfuklgf,lfufy",
     "from": "监控系统",
     "desc": "服务器 CPU 使用率过高",
     "remark": "当前使用率: 95%",
@@ -311,6 +316,7 @@ curl -X POST https://your-worker.workers.dev/send \
   -H "Content-Type: application/json" \
   -d '{
     "token": "sk_abc123xyz",
+    "temp": "dfgsdhsgfjyjjgkgfuklgf,lfufy",
     "from": "监控系统",
     "desc": "服务器 CPU 使用率过高"
   }'
